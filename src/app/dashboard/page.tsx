@@ -42,7 +42,7 @@ export default function Dashboard() {
       } else {
         setSaveStatus("Failed to send to API");
       }
-    } catch (err) {
+    } catch (_err) {
       setSaveStatus("Failed to save");
     }
   };
