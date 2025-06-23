@@ -2,10 +2,10 @@ import { kv } from "@vercel/kv";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  _req: NextRequest,
-  context: { params: Record<string, string> }
+  req: NextRequest,
+  { params }: { params: { id: string } }
 ) {
-  const id = context.params.id;
+  const id = params.id;
   const project = await kv.get(`project:${id}`);
 
   if (!project) {
