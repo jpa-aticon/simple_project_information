@@ -11,5 +11,7 @@ export async function POST(req: NextRequest) {
   // Save to Redis KV using key: project:ID
   await kv.set(`project:${project.projectId}`, project);
 
+  console.log("Saving to Redis:", project.projectId, project);
+    
   return NextResponse.json({ ok: true });
 }
