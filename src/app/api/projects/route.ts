@@ -1,7 +1,15 @@
+import { kv } from "@vercel/kv";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
-  // 받은 데이터를 그대로 반환
-  return NextResponse.json(data);
+  const project = await req.json();
+
+  if (!project.projectId) {
+    return NextResponse.json({ error: "Missing projectId" }, { status: 400 });
+  }
+
+  // Save to Redis KV using key: project:ID
+  await kv.set(`project:${project.projectId}`, project);
+
+  return NextResponse.json({ ok: true });
 }
