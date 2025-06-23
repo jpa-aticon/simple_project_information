@@ -1,9 +1,8 @@
 import { kv } from "@vercel/kv";
 import { NextRequest, NextResponse } from "next/server";
-import type { NextApiRequest } from "next";
 
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   context: { params: Record<string, string> }
 ) {
   const id = context.params.id;
