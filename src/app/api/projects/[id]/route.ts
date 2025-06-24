@@ -1,3 +1,4 @@
+import { kv } from "@vercel/kv";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
@@ -7,10 +8,10 @@ const supabase = createClient(
 );
 
 export async function GET(
-  _req: NextRequest,
-  context: { params: Record<string, string> }
+  req: NextRequest,
+  { params }: { params: { id: string } }
 ) {
-  const { id } = context.params;
+  const id = params.id;
 
   const { data, error } = await supabase
     .from("projects")
