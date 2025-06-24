@@ -20,18 +20,20 @@ export async function GET(
   
 
     // Create a JSON response
-  const body = JSON.stringify(data || { error: "Project not found" });
-  const status = data ? 200 : 404;
-  
+  const response = data
+  ? NextResponse.json(data)
+  : NextResponse.json({ error: "Project not found" }, { status: 404 });
 
   // ✅ CORS headers to allow access from your Word Add-in
-  return new Response(body, {
-    status,
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type"
-    }
-  });
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+
+
+
+  if (error || !data) {
+    return NextResponse.json({ error: "Project not found" }, { status: 404 });
+  }
+
+  return NextResponse.json(data);
 }
