@@ -18,9 +18,20 @@ export async function GET(
     .eq("id", id)
     .single();
 
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json"
+  };
+
   if (error || !data) {
-    return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    return new Response(JSON.stringify({ error: "Project not found" }), {
+      status: 404,
+      headers
+    });
   }
 
-  return NextResponse.json(data);
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers
+  });
 }
