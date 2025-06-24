@@ -35,5 +35,13 @@ export async function GET(
     return NextResponse.json({ error: "Project not found" }, { status: 404 });
   }
 
-  return NextResponse.json(data);
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json"
+  };
+
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers
+  });
 }
